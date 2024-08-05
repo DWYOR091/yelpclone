@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 
 //router
 app.use('/places', require('./routes/place'))
+app.use('/places', require('./routes/review'))
 
 app.all('*', (req, res, next) => {
     next(new ErrorHandler('Page Not Found', 404))
