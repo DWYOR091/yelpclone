@@ -27,9 +27,23 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/:id', async (req, res, next) => {
-    const { id } = req.params
-    const place = await Place.findById(id)
-    res.render('place/detail', { place })
+    try {
+        const { id } = req.params
+        const place = await Place.findById(id).populate('reviews')
+        res.render('place/detail', { place })
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.delete('/delete/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await Place.findByIdAndDelete(id)
+        res.redirect('/places')
+    } catch (error) {
+        next(error)
+    }
 })
 
 module.exports = router
