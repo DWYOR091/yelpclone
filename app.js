@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const path = require('path')
 const ejsMate = require('ejs-mate')
+const ErrorHandler = require('./utils/ErrorHandler')
 //connect to mongo
 mongoose.connect('mongodb://127.0.0.1/yelpclone')
     .then(result => {
@@ -22,6 +23,16 @@ app.get('/', (req, res) => {
 
 //router
 app.use('/places', require('./routes/place'))
+
+app.all('*', (req, res, next) => {
+    next(new ErrorHandler('Page Not Found', 404))
+})
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err
+    if (!err.message) err.message = 'Oh No, Something Went Wrong'
+    res.status(statusCode).render('error', { err });
+})
 
 app.listen(3000, () => {
     console.log(`Server started on port 3000`);
