@@ -1,0 +1,72 @@
+<% layout('layouts/app') %>
+<h2 class="text-center">Add Place</h2>
+<div class="col-6 offset-3">
+  <form action="/places" method="post" class="validate-form" novalidate>
+    <div class="mb-3">
+      <label for="title" class="form-label"> Title:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="place[title]"
+        placeholder="masukan judul"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3">
+      <label for="price" class="form-label"> Price:</label>
+      <input
+        type="number"
+        class="form-control"
+        id="price"
+        name="place[price]"
+        placeholder="masukan harga"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3" class="form-label">
+      <label for="description"> Description:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="place[description]"
+        placeholder="masukan deskripsi"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3" class="form-label">
+      <label for="location"> Location:</label>
+      <textarea
+        name="place[location]"
+        id=""
+        cols="30"
+        rows="5"
+        class="form-control"
+        required
+      ></textarea>
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3" class="form-label">
+      <label for="image"> Image Address:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="image"
+        name="place[image]"
+        placeholder="masukan image address"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Save</button>
+  </form>
+</div>

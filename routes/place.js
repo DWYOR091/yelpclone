@@ -36,6 +36,26 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+router.get('/edit/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const place = await Place.findById(id)
+        res.render('place/edit', { place })
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.put('/saveEdit/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params
+        await Place.findByIdAndUpdate(id, req.body.place)
+        res.redirect('/places')
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.delete('/delete/:id', async (req, res, next) => {
     try {
         const { id } = req.params
