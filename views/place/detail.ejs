@@ -1,0 +1,68 @@
+<% layout('layouts/app') %>
+<div class="row p-5">
+  <div class="col-md-6">
+    <div class="card mb-5">
+      <img src="<%= place.image %>" alt="" class="img-fluid" />
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <%= place.title %>
+          <p class="text-secondary"><%= place.description %></p>
+        </li>
+        <li class="list-group-item"><%= place.location %></li>
+        <li class="list-group-item">Rp.<%= place.price %></li>
+        <li class="list-group-item">
+          <form
+            action="/places/delete/<%= place._id %>?_method=delete"
+            method="post"
+            class="d-inline"
+          >
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <a
+            href="/places/edit/<%= place._id %>"
+            class="btn btn-warning text-white"
+            >Edit</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2>Leave out a rating</h2>
+    <form
+      action="/places/<%= place._id %>/reviews"
+      method="post"
+      class="validate-form"
+      novalidate
+    >
+      <div>
+        <label for="rating" class="form-label">Rating</label>
+        <input
+          type="range"
+          name="review[rating]"
+          min="1"
+          max="5"
+          id="rating"
+          class="form-range"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div>
+        <label for="comment" class="form-label">Comment</label>
+        <textarea
+          name="review[body]"
+          id="comment"
+          cols="30"
+          rows="5"
+          class="form-control"
+          required
+        ></textarea>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <button type="submit" class="btn btn-primary mt-4">Send</button>
+    </form>
+  </div>
+</div>

@@ -12,6 +12,9 @@ mongoose.connect('mongodb://127.0.0.1/yelpclone')
         console.log(error)
     })
 
+//middleware parsing
+app.use(express.urlencoded({ extended: true }))
+
 //ejs
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
