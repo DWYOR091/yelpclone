@@ -1,6 +1,19 @@
 const express = require('express')
 const router = express.Router();
 const Place = require('../models/place')
+const { placeSchema } = require('../schemas/place')
+const ErrorHandler = require('../utils/ErrorHandler')
+
+//validasi
+const validasiPlace = (req, res, next) => {
+    const { error } = placeSchema.validate()
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        return new ErrorHandler(msg, 400)
+    } else {
+        next()
+    }
+}
 
 router.get('/', async (req, res, next) => {
     try {
@@ -15,7 +28,7 @@ router.get('/create', (req, res) => {
     res.render('place/create')
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', validasiPlace, async (req, res, next) => {
     try {
         const place = new Place(req.body.place)
         console.log(place)
@@ -46,7 +59,7 @@ router.get('/edit/:id', async (req, res, next) => {
     }
 })
 
-router.put('/saveEdit/:id', async (req, res, next) => {
+router.put('/saveEdit/:id', validasiPlace, async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndUpdate(id, req.body.place)
