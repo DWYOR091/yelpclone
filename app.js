@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const ejsMate = require('ejs-mate')
 const ErrorHandler = require('./utils/ErrorHandler')
+const methodOverride = require('method-override')
 //connect to mongo
 mongoose.connect('mongodb://127.0.0.1/yelpclone')
     .then(result => {
@@ -14,6 +15,9 @@ mongoose.connect('mongodb://127.0.0.1/yelpclone')
 
 //middleware parsing
 app.use(express.urlencoded({ extended: true }))
+
+//method override
+app.use(methodOverride('_method'));
 
 //ejs
 app.set('view engine', 'ejs')
