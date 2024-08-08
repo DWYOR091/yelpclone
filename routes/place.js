@@ -33,6 +33,7 @@ router.post('/', validasiPlace, async (req, res, next) => {
         const place = new Place(req.body.place)
         console.log(place)
         await place.save()
+        req.flash('success-msg', 'Place     Added Successfully')
         res.redirect('/places')
     } catch (error) {
         next(error)

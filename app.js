@@ -5,6 +5,8 @@ const path = require('path')
 const ejsMate = require('ejs-mate')
 const ErrorHandler = require('./utils/ErrorHandler')
 const methodOverride = require('method-override')
+const session = require('express-session')
+const flash = require('connect-flash')
 //connect to mongo
 mongoose.connect('mongodb://127.0.0.1/yelpclone')
     .then(result => {
@@ -26,6 +28,27 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.engine('ejs', ejsMate)
+
+//session
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        // secur: true,// hanya kirim lewat https
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, //jika ingin spesifik
+        // maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}))
+
+//konfigurasi connect flash
+app.use(flash())
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success-msg')
+    res.locals.error_msg = req.flash('error-msg')
+    next()
+})
 
 app.get('/', (req, res) => {
     res.render('home');
