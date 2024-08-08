@@ -1,7 +1,7 @@
 <% layout('layouts/app') %>
-<h2 class="text-center">Register</h2>
+<h2 class="text-center">Login</h2>
 <div class="col-6 offset-3">
-  <form action="/register" method="post" class="validate-form" novalidate>
+  <form action="/login" method="post" class="validate-form" novalidate>
     <div class="mb-3">
       <label for="Username" class="form-label"> Username:</label>
       <input
@@ -10,19 +10,6 @@
         id="Username"
         name="username"
         placeholder="masukan username"
-        required
-      />
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <div class="mb-3">
-      <label for="Email" class="form-label"> Email:</label>
-      <input
-        type="email"
-        class="form-control"
-        id="Email"
-        name="email"
-        placeholder="masukan email"
         required
       />
       <div class="valid-feedback">Looks good!</div>
