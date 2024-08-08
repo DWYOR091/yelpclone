@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: true }))
 //method override
 app.use(methodOverride('_method'));
 
+//membuat folder static
+app.use(express.static(path.join(__dirname, 'public')))
+
 //ejs
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
