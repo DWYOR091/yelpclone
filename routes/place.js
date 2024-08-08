@@ -64,7 +64,8 @@ router.put('/saveEdit/:id', validasiPlace, async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndUpdate(id, req.body.place)
-        res.redirect('/places')
+        req.flash('success-msg', 'Place Updated Successfully')
+        res.redirect(`/places/${id}`)
     } catch (error) {
         next(error)
     }
@@ -74,6 +75,7 @@ router.delete('/delete/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndDelete(id)
+        req.flash('success-msg', 'Place Deleted Successfully')
         res.redirect('/places')
     } catch (error) {
         next(error)
