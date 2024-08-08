@@ -7,6 +7,10 @@ const ErrorHandler = require('./utils/ErrorHandler')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+const User = require('./models/user')
+
 //connect to mongo
 mongoose.connect('mongodb://127.0.0.1/yelpclone')
     .then(result => {
@@ -44,6 +48,14 @@ app.use(session({
 
 //konfigurasi connect flash
 app.use(flash())
+
+//passport harus d letakan sebelum session
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser()) //setter
+passport.deserializeUser(User.deserializeUser()) //getter
+
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success-msg')
     res.locals.error_msg = req.flash('error-msg')
@@ -53,6 +65,17 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.render('home');
 });
+
+//register
+app.get('/register', async (req, res) => {
+    const user = new User({
+        email: "user@gmail.com",
+        username: "user123"
+    })
+
+    const newUser = await User.register(user, 'password')
+    res.send(newUser)
+})
 
 //router
 app.use('/places', require('./routes/place'))
