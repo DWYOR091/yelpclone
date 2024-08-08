@@ -3,7 +3,7 @@ const router = express.Router();
 const Place = require('../models/place')
 const { placeSchema } = require('../schemas/place')
 const ErrorHandler = require('../utils/ErrorHandler')
-
+const isValidObjectId = require('../middlewares/isValidObjectId')
 //validasi
 const validasiPlace = (req, res, next) => {
     const { error } = placeSchema.validate(req.body)
@@ -40,7 +40,7 @@ router.post('/', validasiPlace, async (req, res, next) => {
     }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
         const place = await Place.findById(id).populate('reviews')
@@ -50,7 +50,7 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-router.get('/edit/:id', async (req, res, next) => {
+router.get('/edit/:id', isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
         const place = await Place.findById(id)
@@ -60,7 +60,7 @@ router.get('/edit/:id', async (req, res, next) => {
     }
 })
 
-router.put('/saveEdit/:id', validasiPlace, async (req, res, next) => {
+router.put('/saveEdit/:id', isValidObjectId('/places'), validasiPlace, async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndUpdate(id, req.body.place)
@@ -71,7 +71,7 @@ router.put('/saveEdit/:id', validasiPlace, async (req, res, next) => {
     }
 })
 
-router.delete('/delete/:id', async (req, res, next) => {
+router.delete('/delete/:id', isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndDelete(id)
