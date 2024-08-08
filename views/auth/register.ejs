@@ -1,0 +1,46 @@
+<% layout('layouts/app') %>
+<h2 class="text-center">Add Place</h2>
+<div class="col-6 offset-3">
+  <form action="/register" method="post" class="validate-form" novalidate>
+    <div class="mb-3">
+      <label for="Username" class="form-label"> Username:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="Username"
+        name="username"
+        placeholder="masukan username"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3">
+      <label for="Email" class="form-label"> Email:</label>
+      <input
+        type="email"
+        class="form-control"
+        id="Email"
+        name="email"
+        placeholder="masukan email"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3" class="form-label">
+      <label for="Password"> Password:</label>
+      <input
+        type="password"
+        class="form-control"
+        id="Password"
+        name="password"
+        placeholder="masukan password"
+        required
+      />
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <button type="submit" class="btn btn-success mb-3">Save</button>
+  </form>
+</div>

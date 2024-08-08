@@ -67,17 +67,18 @@ app.get('/', (req, res) => {
 });
 
 //register
-app.get('/register', async (req, res) => {
-    const user = new User({
-        email: "user@gmail.com",
-        username: "user123"
-    })
+// app.get('/register', async (req, res) => {
+//     const user = new User({
+//         email: "user@gmail.com",
+//         username: "user123"
+//     })
 
-    const newUser = await User.register(user, 'password')
-    res.send(newUser)
-})
+//     const newUser = await User.register(user, 'password')
+//     res.send(newUser)
+// })
 
 //router
+app.use('/', require('./routes/auth'))
 app.use('/places', require('./routes/place'))
 app.use('/places', require('./routes/review'))
 
