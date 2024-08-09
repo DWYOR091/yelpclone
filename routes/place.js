@@ -45,7 +45,15 @@ router.post('/', validasiPlace, async (req, res, next) => {
 router.get('/:id', isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
-        const place = await Place.findById(id).populate('reviews').populate('author')
+        const place = await Place.findById(id)
+            .populate({
+                //nested populate
+                path: 'reviews',
+                populate: {
+                    path: 'author'
+                }
+            })
+            .populate('author')
         console.log(place)
         res.render('place/detail', { place })
     } catch (error) {
