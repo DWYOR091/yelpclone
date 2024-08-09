@@ -3,9 +3,9 @@ const Review = require('../models/review')
 const Place = require('../models/place')
 const router = express.Router()
 const isValidObjectId = require('../middlewares/isValidObjectId')
+const isAuth = require('../middlewares/isAuth')
 
-
-router.post('/:id/review', isValidObjectId('/places'), async (req, res, next) => {
+router.post('/:id/review', isAuth, isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
         const review = new Review(req.body.review)
@@ -20,7 +20,7 @@ router.post('/:id/review', isValidObjectId('/places'), async (req, res, next) =>
     }
 })
 
-router.delete('/delete/:placeId/review/:reviewId', isValidObjectId('/places'), async (req, res, next) => {
+router.delete('/delete/:placeId/review/:reviewId', isAuth, isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { placeId, reviewId } = req.params
         await Place.findByIdAndUpdate(placeId, { $pull: { reviews: reviewId } })
