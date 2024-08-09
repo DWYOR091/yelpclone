@@ -7,9 +7,10 @@ const PlaceController = require('../controllers/PlaceController')
 const { validasiPlace } = require('../middlewares/validators')
 
 
-router.get('/', PlaceController.index)
+router.route('/')
+    .get(PlaceController.index)
+    .post(validasiPlace, PlaceController.store)
 router.get('/create', isAuth, PlaceController.create)
-router.post('/', validasiPlace, PlaceController.store)
 router.get('/:id', isValidObjectId('/places'), PlaceController.show)
 router.get('/edit/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.edit)
 router.put('/saveEdit/:id', isAuthorPlace, isValidObjectId('/places'), validasiPlace, PlaceController.update)
