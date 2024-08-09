@@ -7,5 +7,5 @@ module.exports.placeSchema = Joi.object({
         description: Joi.string().required(),
         image: Joi.string().required(),
         location: Joi.string().required()
-    })
+    }).required()
 })
