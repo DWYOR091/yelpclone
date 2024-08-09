@@ -33,6 +33,7 @@
     </div>
   </div>
   <div class="col-md-6">
+    <% if(currentUser) {%>
     <h2>Leave a Comment And Rating</h2>
     <form
       action="/places/<%= place._id %>/review"
@@ -70,6 +71,7 @@
       <button type="submit" class="btn btn-primary mt-4">Send</button>
     </form>
     <hr />
+    <% } %>
     <h3>Comments:</h3>
     <%if(place.reviews.length > 0){%> <% for(const review of place.reviews){ %>
     <div class="card text-start my-3">
@@ -80,9 +82,11 @@
           action="/places/delete/<%= place._id %>/review/<%= review._id %>?_method=delete"
           method="post"
         >
+          <% if(review.author.equals(currentUser._id)){%>
           <button type="submit" class="btn btn-danger btn-sm">
             Delete komen
           </button>
+          <% } %>
         </form>
       </div>
     </div>

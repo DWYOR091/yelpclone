@@ -9,9 +9,10 @@ router.post('/:id/review', isAuth, isValidObjectId('/places'), async (req, res, 
     try {
         const { id } = req.params
         const review = new Review(req.body.review)
+        review.author = req.user._id
+        await review.save()
         const place = await Place.findById(id)
         place.reviews.push(review)
-        await review.save()
         await place.save()
         req.flash('success-msg', 'Review Added Successfully')
         res.redirect(`/places/${id}`);
