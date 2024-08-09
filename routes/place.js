@@ -34,7 +34,7 @@ router.post('/', validasiPlace, async (req, res, next) => {
         const place = new Place(req.body.place)
         console.log(place)
         await place.save()
-        req.flash('success-msg', 'Place     Added Successfully')
+        req.flash('success-msg', 'Place Added Successfully')
         res.redirect('/places')
     } catch (error) {
         next(error)
@@ -44,7 +44,8 @@ router.post('/', validasiPlace, async (req, res, next) => {
 router.get('/:id', isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
-        const place = await Place.findById(id).populate('reviews')
+        const place = await Place.findById(id).populate('reviews').populate('author')
+        console.log(place)
         res.render('place/detail', { place })
     } catch (error) {
         next(error)

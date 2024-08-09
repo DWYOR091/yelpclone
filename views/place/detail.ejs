@@ -9,6 +9,9 @@
           <p class="text-secondary"><%= place.description %></p>
         </li>
         <li class="list-group-item"><%= place.location %></li>
+        <li class="list-group-item">
+          Author: <u><%= place.author.username %></u>
+        </li>
         <li class="list-group-item">Rp.<%= place.price %></li>
         <li class="list-group-item">
           <form
