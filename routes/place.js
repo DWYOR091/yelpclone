@@ -5,6 +5,7 @@ const { placeSchema } = require('../schemas/place')
 const ErrorHandler = require('../utils/ErrorHandler')
 const isValidObjectId = require('../middlewares/isValidObjectId')
 const isAuth = require('../middlewares/isAuth')
+const { isAuthorPlace } = require('../middlewares/isAuthor')
 //validasi
 const validasiPlace = (req, res, next) => {
     const { error } = placeSchema.validate(req.body)
@@ -52,7 +53,7 @@ router.get('/:id', isValidObjectId('/places'), async (req, res, next) => {
     }
 })
 
-router.get('/edit/:id', isAuth, isValidObjectId('/places'), async (req, res, next) => {
+router.get('/edit/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
         const place = await Place.findById(id)
@@ -62,7 +63,7 @@ router.get('/edit/:id', isAuth, isValidObjectId('/places'), async (req, res, nex
     }
 })
 
-router.put('/saveEdit/:id', isValidObjectId('/places'), validasiPlace, async (req, res, next) => {
+router.put('/saveEdit/:id', isAuthorPlace, isValidObjectId('/places'), validasiPlace, async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndUpdate(id, req.body.place)
@@ -73,7 +74,7 @@ router.put('/saveEdit/:id', isValidObjectId('/places'), validasiPlace, async (re
     }
 })
 
-router.delete('/delete/:id', isAuth, isValidObjectId('/places'), async (req, res, next) => {
+router.delete('/delete/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), async (req, res, next) => {
     try {
         const { id } = req.params
         await Place.findByIdAndDelete(id)

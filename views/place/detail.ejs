@@ -13,6 +13,7 @@
           Author: <u><%= place.author.username %></u>
         </li>
         <li class="list-group-item">Rp.<%= place.price %></li>
+        <% if(currentUser && place.author.equals(currentUser._id)) {%>
         <li class="list-group-item">
           <form
             action="/places/delete/<%= place._id %>?_method=delete"
@@ -27,6 +28,7 @@
             >Edit</a
           >
         </li>
+        <% } %>
       </ul>
     </div>
   </div>
