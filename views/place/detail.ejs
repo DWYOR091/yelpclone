@@ -82,7 +82,7 @@
           action="/places/delete/<%= place._id %>/review/<%= review._id %>?_method=delete"
           method="post"
         >
-          <% if(review.author.equals(currentUser._id)){%>
+          <% if(currentUser && review.author.equals(currentUser._id)){%>
           <button type="submit" class="btn btn-danger btn-sm">
             Delete komen
           </button>

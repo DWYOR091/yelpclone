@@ -3,7 +3,7 @@ const Review = require('../models/review')
 const Place = require('../models/place')
 const router = express.Router()
 const isValidObjectId = require('../middlewares/isValidObjectId')
-const isAuth = require('../middlewares/isAuth')
+const { isAuth } = require('../middlewares/isAuth')
 
 router.post('/:id/review', isAuth, isValidObjectId('/places'), async (req, res, next) => {
     try {

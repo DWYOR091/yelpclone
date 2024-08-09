@@ -4,7 +4,7 @@ const Place = require('../models/place')
 const { placeSchema } = require('../schemas/place')
 const ErrorHandler = require('../utils/ErrorHandler')
 const isValidObjectId = require('../middlewares/isValidObjectId')
-const isAuth = require('../middlewares/isAuth')
+const { isAuth } = require('../middlewares/isAuth')
 const { isAuthorPlace } = require('../middlewares/isAuthor')
 //validasi
 const validasiPlace = (req, res, next) => {

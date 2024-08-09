@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
 const passport = require('passport')
-const ensureNotAuth = require('../middlewares/redirectIfAuth')
+const { redirectifAuth } = require('../middlewares/isAuth')
 
-router.get('/register', ensureNotAuth, (req, res) => {
+router.get('/register', redirectifAuth, (req, res) => {
     res.render('auth/register')
 })
 
@@ -25,7 +25,7 @@ router.post('/register', async (req, res, next) => {
     }
 })
 
-router.get('/login', ensureNotAuth, (req, res) => {
+router.get('/login', redirectifAuth, (req, res) => {
     res.render('auth/login')
 })
 
