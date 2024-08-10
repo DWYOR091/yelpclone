@@ -12,7 +12,14 @@ module.exports = {
     ,
     store: async (req, res, next) => {
         try {
+            const images = req.files.map(file => {
+                return {
+                    path: file.path,
+                    filename: file.filename
+                }
+            })
             const place = new Place(req.body.place)
+            place.images = images
             place.author = req.user._id
             await place.save()
             req.flash('success-msg', 'Place Added Successfully')
