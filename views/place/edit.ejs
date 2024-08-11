@@ -1,83 +1,123 @@
-<% layout('layouts/app') %>
-<h2 class="text-center">Edit Place</h2>
-<div class="col-6 offset-3">
-  <form
-    action="/places/saveEdit/<%= place._id %>?_method=put"
-    method="post"
-    class="validate-form"
-    enctype="multipart/form-data"
-    novalidate
-  >
-    <div class="mb-3">
-      <label for="title" class="form-label"> Title:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        name="place[title]"
-        placeholder="masukan judul"
-        value="<%= place.title %>"
-        required
-      />
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <div class="mb-3">
-      <label for="price" class="form-label"> Price:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="price"
-        name="place[price]"
-        placeholder="masukan harga"
-        value="<%= place.price %>"
-        required
-      />
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <div class="mb-3" class="form-label">
-      <label for="location"> Description:</label>
-      <textarea
-        name="place[location]"
-        id=""
-        cols="30"
-        rows="5"
-        class="form-control"
-        required
-      >
+<div class="row">
+  <% layout('layouts/app') %>
+  <h2 class="text-center">Edit Place</h2>
+  <div class="col-6 <%= !place.images ? 'offset-3' : '' %>">
+    <form
+      action="/places/saveEdit/<%= place._id %>?_method=put"
+      method="post"
+      class="validate-form"
+      enctype="multipart/form-data"
+      novalidate
+    >
+      <div class="mb-3">
+        <label for="title" class="form-label"> Title:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="place[title]"
+          placeholder="masukan judul"
+          value="<%= place.title %>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label"> Price:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="price"
+          name="place[price]"
+          placeholder="masukan harga"
+          value="<%= place.price %>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div class="mb-3" class="form-label">
+        <label for="location"> Description:</label>
+        <textarea
+          name="place[location]"
+          id=""
+          cols="30"
+          rows="5"
+          class="form-control"
+          required
+        >
 <%= place.location %></textarea
-      >
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <div class="mb-3" class="form-label">
-      <label for="description"> Location:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="description"
-        name="place[description]"
-        placeholder="masukan deskripsi"
-        value="<%= place.location %>"
-        required
-      />
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <div class="mb-3" class="form-label">
-      <label for="image"> Image:</label>
-      <input
-        type="file"
-        class="form-control"
-        id="image"
-        name="image"
-        accept="image/*"
-        multiple
-      />
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <button type="submit" class="btn btn-success mb-3">Save</button>
-  </form>
+        >
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div class="mb-3" class="form-label">
+        <label for="description"> Location:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          name="place[description]"
+          placeholder="masukan deskripsi"
+          value="<%= place.location %>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div class="mb-3" class="form-label">
+        <label for="image"> Image:</label>
+        <input
+          type="file"
+          class="form-control"
+          id="image"
+          name="image"
+          accept="image/*"
+          multiple
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <button type="submit" class="btn btn-success mb-3">Save</button>
+    </form>
+  </div>
+  <div class="col-6">
+    <form action="" method="post">
+      <label for="pilihSemua">Pilih Semua</label>
+      <input type="checkbox" id="pilihSemua" class="form-check-input" />
+      <div class="row">
+        <% for(const img of place.images){ %>
+        <div class="col-lg-4 col-sm-3 p-1">
+          <div class="card">
+            <input
+              type="checkbox"
+              class="form-check-input ms-1 position-absolute"
+              name="image[]"
+              id="pilih<%= img.filename %>"
+            />
+            <label for="pilih<%= img.filename %>">
+              <img
+                src="/images/<%= img.filename %>"
+                alt="<%= place.title %>"
+                class="img-fluid"
+              />
+            </label>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </form>
+  </div>
 </div>
+
+<script>
+  const cekAll = document.getElementById("pilihSemua");
+  const cek = document.getElementsByName("image[]");
+
+  cekAll.addEventListener("change", (e) => {
+    for (const c of cek) {
+      c.checked = e.target.checked;
+    }
+  });
+</script>
