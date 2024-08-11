@@ -1,4 +1,6 @@
 const Place = require('../models/place')
+const fs = require('fs')
+const ErrorHandler = require('../utils/ErrorHandler')
 
 module.exports = {
     index: async (req, res, next) => {
@@ -45,7 +47,6 @@ module.exports = {
                     }
                 })
                 .populate('author')
-            console.log(place)
             res.render('place/detail', { place })
         } catch (error) {
             next(error)
@@ -65,7 +66,20 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const { id } = req.params
-            await Place.findByIdAndUpdate(id, req.body.place)
+            const place = await Place.findByIdAndUpdate(id, req.body.place)
+
+            place.images.forEach(image => {
+                fs.unlink(image.path, err => new ErrorHandler(err))
+            })
+
+            if (req.files && req.files.length > 0) {
+                const images = req.files.map(file => ({
+                    path: file.path,
+                    filename: file.filename
+                }))
+                place.images = images
+                await place.save()
+            }
             req.flash('success-msg', 'Place Updated Successfully')
             res.redirect(`/places/${id}`)
         } catch (error) {

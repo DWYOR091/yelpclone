@@ -14,7 +14,7 @@ router.route('/')
 router.get('/create', isAuth, PlaceController.create)
 router.get('/:id', isValidObjectId('/places'), PlaceController.show)
 router.get('/edit/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.edit)
-router.put('/saveEdit/:id', isAuthorPlace, isValidObjectId('/places'), validasiPlace, PlaceController.update)
+router.put('/saveEdit/:id', isAuthorPlace, upload.array('image', 5), isValidObjectId('/places'), validasiPlace, PlaceController.update)
 router.delete('/delete/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.destroy)
 
 module.exports = router

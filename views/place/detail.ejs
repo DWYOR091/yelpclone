@@ -2,35 +2,18 @@
 <div class="row p-5">
   <div class="col-md-6">
     <div class="card mb-5">
-      <div id="carouselExampleIndicators" class="carousel slide">
+      <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+          <% place.images.forEach((image,index) => { %>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <% }) %>
         </div>
         <div class="carousel-inner">
           <% place.images.forEach((image,index) => { %>
-          <div class="carousel-item <%= index === 0 ? "active":'' %>">
+            <div class="carousel-item <%= index === 0 ? "active":'' %>" data-bs-interval="5000  ">
             <img
               src="/images/<%= image.filename %>"
-              class="img-fluid d-block"
+              class="img-fluid d-block w-100"
               alt="<%= place.title %>"
             />
           </div>

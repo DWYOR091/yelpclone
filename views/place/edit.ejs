@@ -5,6 +5,7 @@
     action="/places/saveEdit/<%= place._id %>?_method=put"
     method="post"
     class="validate-form"
+    enctype="multipart/form-data"
     novalidate
   >
     <div class="mb-3">
@@ -65,15 +66,14 @@
       <div class="invalid-feedback">Please fill out this field.</div>
     </div>
     <div class="mb-3" class="form-label">
-      <label for="image"> Image Address:</label>
+      <label for="image"> Image:</label>
       <input
-        type="text"
+        type="file"
         class="form-control"
         id="image"
-        name="place[image]"
-        placeholder="masukan image address"
-        value="<%= place.image %>"
-        required
+        name="image"
+        accept="image/*"
+        multiple
       />
       <div class="valid-feedback">Looks good!</div>
       <div class="invalid-feedback">Please fill out this field.</div>
