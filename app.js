@@ -10,6 +10,7 @@ const flash = require('connect-flash')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user')
+const { geocode } = require('./utils/maps')
 
 //connect to mongo
 mongoose.connect('mongodb://127.0.0.1/yelpclone')
@@ -63,7 +64,10 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const address = "Taman Mini Indonesia Indah"
+    const response = await geocode(address)
+    console.log(response)
     res.render('home');
 });
 
