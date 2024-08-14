@@ -13,8 +13,12 @@ router.route('/')
     .post(isAuth, upload.array('image', 5), validasiPlace, PlaceController.store)
 router.get('/create', isAuth, PlaceController.create)
 router.get('/:id', isValidObjectId('/places'), PlaceController.show)
-router.get('/edit/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.edit)
-router.put('/saveEdit/:id', isAuthorPlace, upload.array('image', 5), isValidObjectId('/places'), validasiPlace, PlaceController.update)
-router.delete('/delete/:id', isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.destroy)
+router.get('/edit/:id', isAuth, isAuthorPlace, isValidObjectId('/places'), PlaceController.edit)
+router.put('/saveEdit/:id', isAuth, isAuthorPlace, upload.array('image', 5), isValidObjectId('/places'), validasiPlace, PlaceController.update)
+router.route('/delete/:id')
+    .delete(isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.destroy);
+
+router.delete('/:id/deleteImg', isAuthorPlace, isAuth, isValidObjectId('/places'), PlaceController.destroyImage);
+
 
 module.exports = router

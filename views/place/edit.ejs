@@ -1,7 +1,7 @@
 <div class="row">
   <% layout('layouts/app') %>
   <h2 class="text-center">Edit Place</h2>
-  <div class="col-6 <%= !place.images ? 'offset-3' : '' %>">
+  <div class="col-6 <%= place.images.length > 0 ? '' : 'offset-3' %>">
     <form
       action="/places/saveEdit/<%= place._id %>?_method=put"
       method="post"
@@ -82,19 +82,25 @@
       <button type="submit" class="btn btn-success mb-3">Save</button>
     </form>
   </div>
+  <% if(place.images.length > 0){ %>
   <div class="col-6">
-    <form action="" method="post">
-      <label for="pilihSemua">Pilih Semua</label>
-      <input type="checkbox" id="pilihSemua" class="form-check-input" />
-      <div class="row">
+    <label for="pilihSemua">Pilih Semua</label>
+    <input type="checkbox" id="pilihSemua" class="form-check-input" />
+    <div class="row">
+      <form
+        action="/places/<%= place._id %>/deleteImg?_method=delete"
+        method="post"
+        class="d-flex flex-wrap"
+      >
         <% for(const img of place.images){ %>
         <div class="col-lg-4 col-sm-3 p-1">
           <div class="card">
             <input
               type="checkbox"
               class="form-check-input ms-1 position-absolute"
-              name="image[]"
+              name="images[]"
               id="pilih<%= img.filename %>"
+              value="<%= img.path %>"
             />
             <label for="pilih<%= img.filename %>">
               <img
@@ -106,14 +112,17 @@
           </div>
         </div>
         <% } %>
-      </div>
-    </form>
+        <div class="w-100"></div>
+        <button class="btn btn-danger btn-sm mt-1" type="submit">Delete</button>
+      </form>
+    </div>
   </div>
+  <% } %>
 </div>
 
 <script>
   const cekAll = document.getElementById("pilihSemua");
-  const cek = document.getElementsByName("image[]");
+  const cek = document.getElementsByName("images[]");
 
   cekAll.addEventListener("change", (e) => {
     for (const c of cek) {

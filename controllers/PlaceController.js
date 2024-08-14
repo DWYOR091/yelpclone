@@ -104,4 +104,28 @@ module.exports = {
             next(error)
         }
     }
+    ,
+    destroyImage: async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const { images } = req.body
+            if (!images || images.length == 0) {
+                req.flash('error-msg', 'Please Select At least One Image')
+                res.redirect(`/places/edit/${id}`)
+            }
+
+            images.forEach(image => {
+                fs.unlink(image, err => { new ErrorHandler(err) })
+            })
+
+            await Place.findByIdAndUpdate(
+                id,
+                { $pull: { images: { path: { $in: images } } } }
+            )
+            req.flash('success-msg', 'Deleted Image Succesfully!')
+            return res.redirect(`/places/edit/${id}`)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
