@@ -1,6 +1,7 @@
 const Place = require('../models/place')
 const fs = require('fs')
 const ErrorHandler = require('../utils/ErrorHandler')
+const { geometry } = require('../utils/maps')
 
 module.exports = {
     index: async (req, res, next) => {
@@ -23,6 +24,8 @@ module.exports = {
             const place = new Place(req.body.place)
             place.images = images
             place.author = req.user._id
+            place.geometry = await geometry(req.body.place.location)
+
             await place.save()
             req.flash('success-msg', 'Place Added Successfully')
             res.redirect('/places')

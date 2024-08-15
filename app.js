@@ -65,9 +65,6 @@ app.use((req, res, next) => {
 })
 
 app.get('/', async (req, res) => {
-    const address = "Taman Mini Indonesia Indah"
-    const response = await geocode(address)
-    console.log(response)
     res.render('home');
 });
 

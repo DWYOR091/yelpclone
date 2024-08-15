@@ -15,7 +15,7 @@
         class="form-control"
         id="title"
         name="place[title]"
-        placeholder="masukan judul"
+        placeholder="Input title here"
         required
       />
       <div class="valid-feedback">Looks good!</div>
@@ -28,20 +28,7 @@
         class="form-control"
         id="price"
         name="place[price]"
-        placeholder="masukan harga"
-        required
-      />
-      <div class="valid-feedback">Looks good!</div>
-      <div class="invalid-feedback">Please fill out this field.</div>
-    </div>
-    <div class="mb-3" class="form-label">
-      <label for="description"> Description:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="description"
-        name="place[description]"
-        placeholder="masukan deskripsi"
+        placeholder="Input price here"
         required
       />
       <div class="valid-feedback">Looks good!</div>
@@ -49,12 +36,26 @@
     </div>
     <div class="mb-3" class="form-label">
       <label for="location"> Location:</label>
-      <textarea
+      <input
         name="place[location]"
+        id=""
+        type="text"
+        class="form-control"
+        placeholder="Input location here"
+        required
+      ></input>
+      <div class="valid-feedback">Looks good!</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3" class="form-label">
+      <label for="description"> Description:</label>
+      <textarea
+        name="place[description]"
         id=""
         cols="30"
         rows="5"
         class="form-control"
+        placeholder="Input description here"
         required
       ></textarea>
       <div class="valid-feedback">Looks good!</div>
