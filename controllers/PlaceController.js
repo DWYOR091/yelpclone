@@ -7,7 +7,14 @@ module.exports = {
     index: async (req, res, next) => {
         try {
             const places = await Place.find()
-            res.render('place/index', { places })
+            const placesCluster = places.map(place => {
+                return {
+                    lat: place.geometry.coordinates[0],
+                    lng: place.geometry.coordinates[1]
+                }
+            })
+            const cluster = JSON.stringify(placesCluster)
+            res.render('place/index', { places, cluster })
         } catch (error) {
             next(error)
         }
