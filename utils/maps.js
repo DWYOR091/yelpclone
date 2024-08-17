@@ -19,7 +19,7 @@ const geocode = async (address) => {
 
 const geometry = async (address) => {
     try {
-        const { position } = await geocode("Gedung Sate, Bandung, Indonesia")
+        const { position } = await geocode(address)
         return {
             type: 'Point',
             coordinates: [position.lat, position.lng]

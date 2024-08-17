@@ -38,31 +38,31 @@
         <div class="invalid-feedback">Please fill out this field.</div>
       </div>
       <div class="mb-3" class="form-label">
-        <label for="location"> Description:</label>
-        <textarea
+        <label for="location"> Location:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="location"
           name="place[location]"
+          placeholder="masukan deskripsi"
+          value="<%= place.location %>"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please fill out this field.</div>
+      </div>
+      <div class="mb-3" class="form-label">
+        <label for="description"> Description:</label>
+        <textarea
+          name="place[description]"
           id=""
           cols="30"
           rows="5"
           class="form-control"
           required
         >
-<%= place.location %></textarea
+<%= place.description %></textarea
         >
-        <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback">Please fill out this field.</div>
-      </div>
-      <div class="mb-3" class="form-label">
-        <label for="description"> Location:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="description"
-          name="place[description]"
-          placeholder="masukan deskripsi"
-          value="<%= place.location %>"
-          required
-        />
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">Please fill out this field.</div>
       </div>

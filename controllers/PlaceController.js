@@ -1,7 +1,7 @@
 const Place = require('../models/place')
 const fs = require('fs')
 const ErrorHandler = require('../utils/ErrorHandler')
-const { geometry } = require('../utils/maps')
+const { geometry, geocode } = require('../utils/maps')
 
 module.exports = {
     index: async (req, res, next) => {
@@ -69,11 +69,13 @@ module.exports = {
     update: async (req, res, next) => {
         try {
             const { id } = req.params
-            const place = await Place.findByIdAndUpdate(id, req.body.place)
+            const { place } = req.body
+            const geoData = await geometry(place.location)
+            const newPlace = await Place.findByIdAndUpdate(id, { ...place, geometry: geoData })
 
 
             if (req.files && req.files.length > 0) {
-                place.images.forEach(image => {
+                newPlace.images.forEach(image => {
                     fs.unlink(image.path, err => new ErrorHandler(err))
                 })
 
@@ -81,8 +83,8 @@ module.exports = {
                     path: file.path,
                     filename: file.filename
                 }))
-                place.images = images
-                await place.save()
+                newPlace.images = images
+                await newPlace.save()
             }
             req.flash('success-msg', 'Place Updated Successfully')
             res.redirect(`/places/${id}`)

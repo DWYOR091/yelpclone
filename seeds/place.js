@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Place = require('../models/place')
+const { geometry } = require('../utils/maps')
 
 mongoose.connect('mongodb://127.0.0.1/yelpclone')
     .then((result) => {
@@ -154,21 +155,30 @@ async function seedPlaces() {
     ]
 
     try {
-        const newPlaces = places.map(place =>
-        ({
-            ...place,
-            author: '66b4dcff427c8f7883f39b03'
-            , images: {
-                path: "public\\images\\image-1723565125735-304112803.png",
-                filename: "image-1723565125735-304112803.png"
+        //promise all untuk mengeksekusi beberapa promise
+        const newPlaces = await Promise.all(places.map(async place => {
+            let geoData = await geometry(place.location)
+            if (!geoData) {
+                geoData = { type: 'Point', coordinates: [116.32883, -8.90952] }
             }
-        }))
+            return {
+                ...place,
+                author: '66b4dcff427c8f7883f39b03',
+                images: {
+                    path: "public\\images\\image-1723565125735-304112803.png",
+                    filename: "image-1723565125735-304112803.png"
+                },
+                geometry: geoData
+            }
+        }
+        )
+        )
         await Place.deleteMany({})
 
         await Place.insertMany(newPlaces)
         console.log('Data berhasil disimpan!')
     } catch (error) {
-        console.log(error)
+        console.log(error.message)
     } finally {
         mongoose.disconnect()
     }

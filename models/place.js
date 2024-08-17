@@ -6,6 +6,7 @@ const placeSchema = new Schema({
     title: String,
     price: Number,
     description: String,
+    location: String,
     geometry: {
         type: {
             type: String,
